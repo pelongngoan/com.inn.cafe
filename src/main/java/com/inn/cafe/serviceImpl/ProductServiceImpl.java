@@ -120,7 +120,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<List<ProductWrapper>> getByCategory(Integer id) {
         try {
-            return new ResponseEntity<>(productDao.getProductByCategory(id),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(productDao.getProductByCategory(id),HttpStatus.OK);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -130,7 +130,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<ProductWrapper> getProductById(Integer id) {
         try {
-            return new ResponseEntity<>(productDao.getProductById(id),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(productDao.getProductById(id),HttpStatus.OK);
         } catch (Exception e){
             e.printStackTrace();
         }

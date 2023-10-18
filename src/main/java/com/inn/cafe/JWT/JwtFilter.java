@@ -34,20 +34,23 @@ public class JwtFilter extends OncePerRequestFilter {
     private String userName = null;
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        if (httpServletRequest.getServletPath().matches("/user/login | /user/forgetPassword | /user/signup")){
+        System.out.println("http:"+httpServletRequest);
+        if (httpServletRequest.getServletPath().matches("/user/login|/user/forgetPassword|/user/signup")){
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         } else {
             String authorization = httpServletRequest.getHeader("Authorization");
             String token = null;
-            if (authorization !=null && authorization.startsWith("Bearer")){
+            System.out.println("Authorization:"+authorization);
+            if (authorization !=null && authorization.startsWith("Bearer ")){
+
                 token = authorization.substring(7);
                 System.out.println("7: "+token);
                 userName = jwtUtil.extractUserName(token);
                 claims = jwtUtil.extractAllClaims(token);
             }
-
             if (userName!=null && SecurityContextHolder.getContext().getAuthentication()== null) {
                 UserDetails userDetails = service.loadUserByUsername(userName);
+
                 if (jwtUtil.validateToken(token, userDetails)){
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());

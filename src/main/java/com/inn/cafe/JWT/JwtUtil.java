@@ -15,27 +15,25 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtil {
-    private String secret = "becthdays";
+    private String secret = "birthdays";
     public String extractUserName(String token){
-        System.out.println("4: "+token);
+
         return extractClaims(token, Claims::getSubject);
     }
     public Date extractExpiration(String token){
-        System.out.println("3: "+token);
         return extractClaims(token, Claims::getExpiration);
     }
     public <T> T extractClaims(String token, Function<Claims,T> claimsResolver){
-        System.out.println("2: "+token);
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
     public Claims extractAllClaims(String token){
-        System.out.println("1: "+token);
+
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token){
-        System.out.println("5: "+token);
+
         return extractExpiration(token).before(new Date());
     }
 
@@ -56,7 +54,7 @@ public class JwtUtil {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails){
-        System.out.println("6: "+token);
+
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

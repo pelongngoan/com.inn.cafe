@@ -42,6 +42,7 @@ public class BillServiceImpl implements BillService {
         log.info("Inside generateReport");
         try {
             String fileName;
+            System.out.println(validateRequestMap(requestMap));
             if (validateRequestMap(requestMap)){
                 if (requestMap.containsKey("isGenerate") && !(Boolean) requestMap.get("isGenerate")){
                     fileName =  (String) requestMap.get("uuid");

@@ -74,7 +74,6 @@ public class UserServiceImpl implements UserService {
             );
             if (authentication.isAuthenticated()){
                 if (customerUserDetailsService.getUserDetail().getStatus().equalsIgnoreCase("true")){
-                    System.out.println("this");
                     return new ResponseEntity<String>("{\"token\":\""+
                             jwtUtil.generateToken(customerUserDetailsService.getUserDetail().getEmail(),
                                     customerUserDetailsService.getUserDetail().getRole())+"\"}",
